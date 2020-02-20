@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/callcenter?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    data-username: root
+    data-password: root
+  #关闭spring session不然会报错
+  session:
+    store-type: none
+server:
+  port: 8088
+security:
+  basic:
+    enabled: false
