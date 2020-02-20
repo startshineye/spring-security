@@ -14,6 +14,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 
 /**
@@ -92,5 +94,28 @@ public class UserControllerTest {
 
         System.out.println("Test:"+resut);
         //Test:{"id":"1","username":"Jack","password":null,"birthday":1582190517178}
+    }
+
+    @Test
+    public void whenUpdateSuccess() throws Exception{
+        //与创建区别:创建时候是post请求,我们修改时候用put请求,创建时候是没有id的但是修改时候需要根据id去修改,所以有id
+        Date date = new Date(LocalDateTime.now().plusYears(1).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());//定义未来时间作为生日过去时间的校验
+        System.out.println(date);
+        String content = "{\"id\":\"1\",\"username\":\"Jack\",\"password\":null,\"birthday\":"+date.getTime()+"}";
+        String resut = mockMvc.perform(MockMvcRequestBuilders.put("/user/1")//针对id为1的用户进行修改
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(content)).andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value("1"))//返回的json对象属性id值为1
+                .andReturn().getResponse().getContentAsString();
+
+        System.out.println("Test:"+resut);
+        //Test:{"id":"1","username":"Jack","password":null,"birthday":1582190517178}
+    }
+
+    @Test
+    public void whenDeleteSuccess() throws Exception{
+        mockMvc.perform(MockMvcRequestBuilders.delete("/user/1")//针对id为1的用户进行修改
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 }
