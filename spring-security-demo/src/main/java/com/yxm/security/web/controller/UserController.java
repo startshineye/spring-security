@@ -103,11 +103,10 @@ public class UserController {
     @GetMapping("/{id:\\d+}")
     @JsonView(User.UserDetailView.class)
     public User DetailInfo(@PathVariable(name = "id") String xxx){
-        throw new UserNotExistException(xxx);
-       /* User user = new User();
+        //throw new UserNotExistException();
+        User user = new User();
         user.setUsername("Jack");
-        return user;*/
+        System.out.println("====DetailInfo=====");
+        return user;
     }
-
-
 }

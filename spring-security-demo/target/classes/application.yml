@@ -1,9 +1,4 @@
 spring:
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://47.104.94.106:3307/callcenter?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
-    data-username: root
-    data-password: rbjf_DEV123
   #关闭spring session不然会报错
   session:
     store-type: none
