@@ -3,6 +3,7 @@ package com.yxm.security.web.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.yxm.security.dto.User;
 import com.yxm.security.dto.UserQueryCondition;
+import com.yxm.security.exception.UserNotExistException;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.springframework.data.domain.Pageable;
@@ -39,7 +40,7 @@ public class UserController {
      */
 
     @PostMapping
-    public User create(@Valid @RequestBody User user, BindingResult errors){
+    public User create(@Valid @RequestBody User user){
         /**
          * 参数校验:最常用方式:
          * 1.自己写代码校验:自己写 非常繁琐 可能 有时候有代码重复修改
@@ -50,10 +51,10 @@ public class UserController {
          *
          * BingingResult类需要跟@Valid配合的
          */
-        if(errors.hasErrors()){
+        /*if(errors.hasErrors()){
             errors.getAllErrors().stream().forEach(error->System.out.println(error.getDefaultMessage()));
             //may not be empty
-        }
+        }*/
 
         //使用反射工具
         System.out.println("create:"+ReflectionToStringBuilder.toString(user, ToStringStyle.MULTI_LINE_STYLE));
@@ -102,9 +103,10 @@ public class UserController {
     @GetMapping("/{id:\\d+}")
     @JsonView(User.UserDetailView.class)
     public User DetailInfo(@PathVariable(name = "id") String xxx){
-        User user = new User();
+        throw new UserNotExistException(xxx);
+       /* User user = new User();
         user.setUsername("Jack");
-        return user;
+        return user;*/
     }
 
 
