@@ -90,7 +90,7 @@ public class UserController {
 
     @GetMapping
     @JsonView(User.UserSimpleView.class)
-    public  List<User> user(UserQueryCondition condition, @PageableDefault(page = 1,size = 10,sort = "username,asc") Pageable pageable){
+    public  List<User> query(UserQueryCondition condition, @PageableDefault(page = 1,size = 10,sort = "username,asc") Pageable pageable){
         //使用反射工具
         System.out.println(ReflectionToStringBuilder.toString(condition, ToStringStyle.MULTI_LINE_STYLE));
 

@@ -4,6 +4,6 @@ spring:
     store-type: none
 server:
   port: 8088
-security:
-  basic:
-    enabled: false
+#security:
+#  basic:
+#    enabled: false
