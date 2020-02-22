@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="7" failures="1" name="com.yxm.security.web.controller.UserControllerTest" time="1.486" errors="0" skipped="0">
+<testsuite tests="7" failures="0" name="com.yxm.security.web.controller.UserControllerTest" time="2.353" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="D:\Java\jdk1.8.0_151\jre\bin"/>
@@ -65,61 +65,11 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="com.yxm.security.web.controller.UserControllerTest" name="whenDetailInfoFail" time="0.523"/>
-  <testcase classname="com.yxm.security.web.controller.UserControllerTest" name="whenUploadSuccess" time="0.228"/>
-  <testcase classname="com.yxm.security.web.controller.UserControllerTest" name="whenDetailInfoSuccess" time="0.09"/>
-  <testcase classname="com.yxm.security.web.controller.UserControllerTest" name="whenQuerySuccess" time="0.15"/>
-  <testcase classname="com.yxm.security.web.controller.UserControllerTest" name="whenCreateSuccess" time="0.375">
-    <failure message="Status expected:&lt;200&gt; but was:&lt;400&gt;" type="java.lang.AssertionError">java.lang.AssertionError: Status expected:&lt;200&gt; but was:&lt;400&gt;
-	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:54)
-	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:81)
-	at org.springframework.test.web.servlet.result.StatusResultMatchers$10.match(StatusResultMatchers.java:665)
-	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:171)
-	at com.yxm.security.web.controller.UserControllerTest.whenCreateSuccess(UserControllerTest.java:93)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
-	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
-	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
-	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
-	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
-	at org.springframework.test.context.junit4.statements.RunBeforeTestMethodCallbacks.evaluate(RunBeforeTestMethodCallbacks.java:75)
-	at org.springframework.test.context.junit4.statements.RunAfterTestMethodCallbacks.evaluate(RunAfterTestMethodCallbacks.java:86)
-	at org.springframework.test.context.junit4.statements.SpringRepeat.evaluate(SpringRepeat.java:84)
-	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
-	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:252)
-	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:94)
-	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
-	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
-	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
-	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
-	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
-	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
-	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
-	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
-	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:191)
-	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:252)
-	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:141)
-	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:112)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:189)
-	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:165)
-	at org.apache.maven.surefire.booter.ProviderFactory.invokeProvider(ProviderFactory.java:85)
-	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
-	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
-</failure>
-    <system-out>2020-02-22 10:21:43.247  INFO 15784 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring FrameworkServlet &apos;&apos;
-2020-02-22 10:21:43.247  INFO 15784 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : FrameworkServlet &apos;&apos;: initialization started
-2020-02-22 10:21:43.255  INFO 15784 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : FrameworkServlet &apos;&apos;: initialization completed in 7 ms
-my ConstraintValidator init
-Jack
-</system-out>
-  </testcase>
-  <testcase classname="com.yxm.security.web.controller.UserControllerTest" name="whenUpdateSuccess" time="0.102"/>
-  <testcase classname="com.yxm.security.web.controller.UserControllerTest" name="whenDeleteSuccess" time="0.018"/>
+  <testcase classname="com.yxm.security.web.controller.UserControllerTest" name="whenDetailInfoFail" time="0.475"/>
+  <testcase classname="com.yxm.security.web.controller.UserControllerTest" name="whenUploadSuccess" time="0.334"/>
+  <testcase classname="com.yxm.security.web.controller.UserControllerTest" name="whenDetailInfoSuccess" time="0.673"/>
+  <testcase classname="com.yxm.security.web.controller.UserControllerTest" name="whenQuerySuccess" time="0.148"/>
+  <testcase classname="com.yxm.security.web.controller.UserControllerTest" name="whenCreateSuccess" time="0.015"/>
+  <testcase classname="com.yxm.security.web.controller.UserControllerTest" name="whenUpdateSuccess" time="0.626"/>
+  <testcase classname="com.yxm.security.web.controller.UserControllerTest" name="whenDeleteSuccess" time="0.082"/>
 </testsuite>
