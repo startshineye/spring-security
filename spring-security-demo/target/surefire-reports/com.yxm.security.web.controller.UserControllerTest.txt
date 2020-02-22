@@ -1,10 +1,14 @@
 -------------------------------------------------------------------------------
 Test set: com.yxm.security.web.controller.UserControllerTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 15.989 sec <<< FAILURE!
-whenQuerySuccess(com.yxm.security.web.controller.UserControllerTest)  Time elapsed: 0.17 sec  <<< ERROR!
-java.lang.NullPointerException
-	at com.yxm.security.web.controller.UserControllerTest.whenQuerySuccess(UserControllerTest.java:45)
+Tests run: 7, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 45.192 sec <<< FAILURE!
+whenCreateSuccess(com.yxm.security.web.controller.UserControllerTest)  Time elapsed: 0.375 sec  <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<400>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:54)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:81)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers$10.match(StatusResultMatchers.java:665)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:171)
+	at com.yxm.security.web.controller.UserControllerTest.whenCreateSuccess(UserControllerTest.java:93)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)

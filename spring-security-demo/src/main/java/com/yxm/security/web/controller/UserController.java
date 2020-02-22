@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.yxm.security.dto.User;
 import com.yxm.security.dto.UserQueryCondition;
 import com.yxm.security.exception.UserNotExistException;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.springframework.data.domain.Pageable;
@@ -102,7 +104,8 @@ public class UserController {
 
     @GetMapping("/{id:\\d+}")
     @JsonView(User.UserDetailView.class)
-    public User DetailInfo(@PathVariable(name = "id") String xxx){
+    @ApiOperation(value = "查询详情服务")
+    public User DetailInfo(@ApiParam("用户id") @PathVariable(name = "id") String xxx){
         //throw new UserNotExistException();
         User user = new User();
         user.setUsername("Jack");

@@ -6,6 +6,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MockMvcBuilder;
@@ -117,5 +119,16 @@ public class UserControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.delete("/user/1")//针对id为1的用户进行修改
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void whenUploadSuccess() throws Exception{
+      String result = mockMvc.perform(MockMvcRequestBuilders.fileUpload("/file")//请求参数url
+               //file-方法参数名  test.txt--file里面传递的文件名  multipart/form-data--参数类型   hello upload--参数内容
+               .file(new MockMultipartFile("file","test.txt","multipart/form-data","hello upload".getBytes("UTF-8"))))
+               .andExpect(MockMvcResultMatchers.status().isOk())
+               .andReturn().getResponse().getContentAsString();
+
+      System.out.println("whenUploadSuccess:"+result);
     }
 }

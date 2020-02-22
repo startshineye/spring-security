@@ -1,11 +1,16 @@
 package com.yxm.security.dto;
 
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * @author yexinming
  * @date 2020/2/20
  **/
 public class UserQueryCondition {
+
+    @ApiModelProperty("用户名")
     private String username;
+    @ApiModelProperty("密码")
     private int age;
 
     public String getUsername() {
