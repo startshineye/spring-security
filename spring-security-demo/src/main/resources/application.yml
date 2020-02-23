@@ -9,6 +9,7 @@ server:
 #    enabled: false
 #此配置项存在的时候,系统走/demo-login.html,没有的话走标准;我们需要把配置项进行封装到类里面去
 yxm:
-                   security:
-                     browser:
-                       loginPage: /demo-login.html
+  security:
+     browser:
+#      loginPage: /demo-login.html
+       loginType: REDIRECT

@@ -11,4 +11,5 @@ server:
 yxm:
   security:
      browser:
-      loginPage: /demo-login.html
+#      loginPage: /demo-login.html
+       loginType: REDIRECT

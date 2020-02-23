@@ -2,6 +2,8 @@ package com.yxm.security.web.config;
 
 import com.yxm.security.core.properties.BrowserProperties;
 import com.yxm.security.core.properties.SecurityProperties;
+import com.yxm.security.web.authentication.MyAuthenticationFailureHandler;
+import com.yxm.security.web.authentication.MyAuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +21,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private SecurityProperties securityProperties;
 
+    @Autowired
+    private MyAuthenticationSuccessHandler myAuthenticationSuccessHandler;
+
+    @Autowired
+    private MyAuthenticationFailureHandler myAuthenticationFailureHandler;
+
     @Bean
     public PasswordEncoder  passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -29,15 +37,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-
         /**
          * 定义了任何请求都需要表单认证
          */
        http.formLogin()//表单登录---指定了身份认证方式
           // .loginPage("/login.html")
-               .loginPage("/authentication/require")
+           .loginPage("/authentication/require")
            .loginProcessingUrl("/authentication/form")//配置UsernamePasswordAuthenticationFilter需要拦截的请求
+           .successHandler(myAuthenticationSuccessHandler)//表单登录成功之后用自带的处理器
+           .failureHandler(myAuthenticationFailureHandler)//表单登录失败之后用自带的处理器
        // http.httpBasic()//http的basic登录
           .and()
           .authorizeRequests()//对请求进行授权
