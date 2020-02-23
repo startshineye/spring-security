@@ -1,0 +1,17 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.yxm.security.core.properties.SecurityProperties",
+      "name": "yxm.security",
+      "type": "com.yxm.security.core.properties.SecurityProperties"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.yxm.security.core.properties.SecurityProperties",
+      "name": "yxm.security.browser",
+      "type": "com.yxm.security.core.properties.BrowserProperties"
+    }
+  ]
+}
