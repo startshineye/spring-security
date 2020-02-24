@@ -3,6 +3,7 @@ package com.yxm.security.web.authentication;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yxm.security.core.enums.LoginType;
 import com.yxm.security.core.properties.SecurityProperties;
+import com.yxm.security.web.beans.SimpleResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,8 @@ public class MyAuthenticationFailureHandler extends SimpleUrlAuthenticationFailu
         if(LoginType.JSON.equals(securityProperties.getBrowser().getLoginType())){//JSON
             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             response.setContentType("application/json;charset=UTF-8");
-            response.getWriter().write(objectMapper.writeValueAsString(exception));
+            //返回给前端错误信息时候,打印出异常消息即可。
+            response.getWriter().write(objectMapper.writeValueAsString(new SimpleResponse(exception.getMessage())));
         }else {
             super.onAuthenticationFailure(request,response,exception);
         }
