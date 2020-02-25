@@ -1,6 +1,7 @@
 package com.yxm.security.core.validate.code;
 import com.yxm.security.core.properties.SecurityProperties;
 import com.yxm.security.core.validate.ImageCode;
+import com.yxm.security.core.validate.code.processor.ValidateCodeProcessor;
 import com.yxm.security.core.validate.exception.ValidateCodeException;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -91,7 +92,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
 
     private void validate(ServletWebRequest servletWebRequest) throws ServletRequestBindingException {
            //1.获取存放到session中的验证码
-        ImageCode codeInSession = (ImageCode)sessionStrategy.getAttribute(servletWebRequest, ValidateCodeController.SESSION_KEY);
+        ImageCode codeInSession = (ImageCode)sessionStrategy.getAttribute(servletWebRequest, ValidateCodeProcessor.SESSION_KEY_PREFIX);
            //2.获取请求中的验证码
         String codeInRequest = ServletRequestUtils.getStringParameter(servletWebRequest.getRequest(), "imageCode");
           if(StringUtils.isBlank(codeInRequest)){
@@ -103,7 +104,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
           }
 
           if(codeInSession.isExpried()){
-              sessionStrategy.removeAttribute(servletWebRequest,ValidateCodeController.SESSION_KEY);
+              sessionStrategy.removeAttribute(servletWebRequest,ValidateCodeProcessor.SESSION_KEY_PREFIX);
               throw new ValidateCodeException("验证码已过期");
           }
 
@@ -111,7 +112,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
               throw new ValidateCodeException("验证码不匹配");
           }
 
-          sessionStrategy.removeAttribute(servletWebRequest,ValidateCodeController.SESSION_KEY);
+          sessionStrategy.removeAttribute(servletWebRequest,ValidateCodeProcessor.SESSION_KEY_PREFIX);
     }
 
     public AuthenticationFailureHandler getAuthenticationFailureHandler() {

@@ -1,6 +1,7 @@
 package com.yxm.security.core.validate.code;
 
 import com.yxm.security.core.validate.ImageCode;
+import com.yxm.security.core.validate.ValidateCode;
 import org.springframework.web.context.request.ServletWebRequest;
 
 /**
@@ -13,5 +14,5 @@ public interface ValidateCodeGenerator {
      * @param request
      * @return
      */
-    ImageCode generate(ServletWebRequest request);
+    ValidateCode generate(ServletWebRequest request);
 }

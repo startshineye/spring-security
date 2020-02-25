@@ -84,7 +84,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                       .userDetailsService(userDetailsService)//配置操作数据库用户的service
                       .and()
           .authorizeRequests()//对请求进行授权
-                      .antMatchers("/authentication/require",securityProperties.getBrowser().getLoginPage(),"/code/image").permitAll()//对匹配login.html的请求允许访问
+                      .antMatchers("/authentication/require",
+                              securityProperties.getBrowser().getLoginPage(),
+                              "/code/*").permitAll()//对匹配login.html的请求允许访问
                       .anyRequest()//任何请求
                       .authenticated()
                        .and()

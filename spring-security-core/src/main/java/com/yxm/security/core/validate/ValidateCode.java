@@ -4,14 +4,15 @@ import java.time.LocalDateTime;
  * @author yexinming
  * @date 2020/2/24
  **/
-public class SmsCode {
+public class ValidateCode {
     private String code;
     /**
      * 过期时间
      */
     private LocalDateTime expireTime;
-    public SmsCode(String code, int expireIn){
-      this.code=code;
+
+    public ValidateCode(String code, int expireIn){
+       this.code=code;
         /**
          * 过期时间传递的参数应该是一个秒数:根据这个秒数去计算过期时间
          */

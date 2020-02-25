@@ -1,6 +1,8 @@
 package com.yxm.security.core.validate.code;
 
 import com.yxm.security.core.properties.SecurityProperties;
+import com.yxm.security.core.validate.code.sms.DefaultSmsCodeSender;
+import com.yxm.security.core.validate.code.sms.SmsCodeSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -27,5 +29,11 @@ public class ValidateCodeBeanConfig {
         ImageCodeGenerator imageCodeGenerator = new ImageCodeGenerator();
         imageCodeGenerator.setSecurityProperties(securityProperties);
         return imageCodeGenerator;
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(SmsCodeSender.class)
+    public SmsCodeSender smsCodeSender(){//方法的名字就是放到Spring容器里bean的名字
+        return new DefaultSmsCodeSender();
     }
 }

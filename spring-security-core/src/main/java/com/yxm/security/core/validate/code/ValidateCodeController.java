@@ -2,22 +2,25 @@ package com.yxm.security.core.validate.code;
 
 import com.yxm.security.core.properties.SecurityProperties;
 import com.yxm.security.core.validate.ImageCode;
+import com.yxm.security.core.validate.ValidateCode;
+import com.yxm.security.core.validate.code.processor.ValidateCodeProcessor;
+import com.yxm.security.core.validate.code.sms.SmsCodeSender;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.web.HttpSessionSessionStrategy;
 import org.springframework.social.connect.web.SessionStrategy;
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.ServletWebRequest;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Random;
+import java.util.Map;
 
 /**
  * @author yexinming
@@ -25,22 +28,38 @@ import java.util.Random;
  **/
 @RestController
 public class ValidateCodeController {
-    public static final String SESSION_KEY = "SESSION_KEY_IMAGE_CODE";
-
-    private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
-
     @Autowired
-    private ValidateCodeGenerator imageCodeGenerator;
+    private Map<String, ValidateCodeProcessor> validateCodeProcessors;
 
-    @GetMapping("/code/image")
+    /*@GetMapping("/code/image")
     public void createCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        /**
-         * 1.根据随机数生成图片
-         * 2.将随机数存到session中
-         * 3.将生成图片写到接口的响应中
-         */
-        ImageCode imageCode = imageCodeGenerator.generate(new ServletWebRequest(request));
+        *//**
+     * 1.根据随机数生成图片
+     * 2.将随机数存到session中
+     * 3.将生成图片写到接口的响应中
+     *//*
+        ImageCode imageCode = (ImageCode) imageCodeGenerator.generate(new ServletWebRequest(request));
         sessionStrategy.setAttribute(new ServletWebRequest(request),SESSION_KEY,imageCode);
         ImageIO.write(imageCode.getImage(),"JPEG",response.getOutputStream());
+    }
+
+    @GetMapping("/code/sms")
+    public void createSmsCode(HttpServletRequest request, HttpServletResponse response) throws ServletRequestBindingException {
+        *//**
+     * 1.根据随机数生成图片
+     * 2.将随机数存到session中
+     * 3.调用短信服务:将短信发送到指定平台
+     *//*
+        ValidateCode smsCode = smsCodeGenerator.generate(new ServletWebRequest(request));
+        sessionStrategy.setAttribute(new ServletWebRequest(request),SESSION_KEY,smsCode);
+        //3.调用短信服务:将短信发送到指定平台,我们封装成如下接口:
+        String mobile = ServletRequestUtils.getRequiredStringParameter(request,"mobile");
+         smsCodeSender.send(mobile,smsCode.getCode());
+    }*/
+
+    //将以上2个服务变成一个服务
+    @GetMapping("/code/{type}")
+    public void createCode(@PathVariable String type,HttpServletRequest request, HttpServletResponse response) throws Exception {
+        validateCodeProcessors.get(type+"CodeProcessor").create(new ServletWebRequest(request,response));
     }
 }
