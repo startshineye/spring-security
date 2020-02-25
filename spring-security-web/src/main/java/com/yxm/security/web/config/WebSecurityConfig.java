@@ -1,6 +1,4 @@
 package com.yxm.security.web.config;
-
-import com.yxm.security.core.properties.BrowserProperties;
 import com.yxm.security.core.properties.SecurityProperties;
 import com.yxm.security.core.validate.code.ValidateCodeFilter;
 import com.yxm.security.web.authentication.MyAuthenticationFailureHandler;
@@ -44,6 +42,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
          */
         ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
         validateCodeFilter.setAuthenticationFailureHandler(myAuthenticationFailureHandler);
+        validateCodeFilter.setSecurityProperties(securityProperties);//传递securityProperties
+        validateCodeFilter.afterPropertiesSet();
 
         http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)//自定义的额过滤器加到UsernamePasswordAuthenticationFilter前面去
                .formLogin()//表单登录---指定了身份认证方式

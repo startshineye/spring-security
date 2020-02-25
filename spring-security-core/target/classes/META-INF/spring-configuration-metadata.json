@@ -12,6 +12,11 @@
       "sourceType": "com.yxm.security.core.properties.SecurityProperties",
       "name": "yxm.security.browser",
       "type": "com.yxm.security.core.properties.BrowserProperties"
+    },
+    {
+      "sourceType": "com.yxm.security.core.properties.SecurityProperties",
+      "name": "yxm.security.code",
+      "type": "com.yxm.security.core.properties.ValidateCodeProperties"
     }
   ]
 }
