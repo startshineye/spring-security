@@ -2,6 +2,12 @@ spring:
   #关闭spring session不然会报错
   session:
     store-type: none
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://47.104.94.106:3307/spring-security?useUnicode=yes&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: rbjf_DEV123
+
 server:
   port: 8088
 #security:
@@ -13,8 +19,8 @@ yxm:
      browser:
 #      loginPage: /demo-login.html
        loginType: JSON
-     code:
-       image:
-         length: 6
-         width: 100
-         url: /user,/user/*
+#     code:
+#       image:
+#         length: 6
+#         width: 100
+#         url: /user,/user/*

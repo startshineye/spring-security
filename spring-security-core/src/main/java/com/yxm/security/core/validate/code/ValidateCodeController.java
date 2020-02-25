@@ -32,7 +32,6 @@ public class ValidateCodeController {
     @Autowired
     private ValidateCodeGenerator imageCodeGenerator;
 
-
     @GetMapping("/code/image")
     public void createCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
         /**

@@ -50,12 +50,13 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
 
         //我们获取配置的ImageCodeProperties里面的url,转化为数据,添加到urls里面去
         String[] configUrls = StringUtils.splitByWholeSeparatorPreserveAllTokens(securityProperties.getCode().getImage().getUrl(), ",");
-        for (String configUrl:configUrls) {
-             urls.add(configUrl);
+        if(configUrls!=null && configUrls.length>0){
+            for (String configUrl:configUrls) {
+                urls.add(configUrl);
+            }
         }
         //"/authentication/form"一定会校验验证码的
         urls.add("/authentication/form");
-
     }
 
     @Override
