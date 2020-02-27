@@ -28,8 +28,8 @@ public class SmsCodeAuthenticationFilter extends AbstractAuthenticationProcessin
     private boolean postOnly = true;
 
     public SmsCodeAuthenticationFilter() {
-        //指明当前过滤器处理的请求是什么?
-        super(new AntPathRequestMatcher("/authentication/moblie", "POST"));
+        //指明当前过滤器处理的请求是什么?            authentication/mobile
+        super(new AntPathRequestMatcher("/authentication/mobile", "POST"));
     }
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         if (this.postOnly && !request.getMethod().equals("POST")) {

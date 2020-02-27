@@ -1,5 +1,7 @@
 package com.yxm.security.web.config;
+import com.yxm.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import com.yxm.security.core.properties.SecurityProperties;
+import com.yxm.security.core.validate.code.SmsCodeFilter;
 import com.yxm.security.core.validate.code.ValidateCodeFilter;
 import com.yxm.security.web.authentication.MyAuthenticationFailureHandler;
 import com.yxm.security.web.authentication.MyAuthenticationSuccessHandler;
@@ -38,6 +40,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
+    @Autowired
+    private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
+
     @Bean
     public PasswordEncoder  passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -69,7 +74,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         validateCodeFilter.setSecurityProperties(securityProperties);//传递securityProperties
         validateCodeFilter.afterPropertiesSet();
 
-        http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)//自定义的额过滤器加到UsernamePasswordAuthenticationFilter前面去
+        /**
+         * 短信验证码过滤器
+         */
+        SmsCodeFilter smsCodeFilter = new SmsCodeFilter();
+        smsCodeFilter.setAuthenticationFailureHandler(myAuthenticationFailureHandler);
+        smsCodeFilter.setSecurityProperties(securityProperties);//传递securityProperties
+        smsCodeFilter.afterPropertiesSet();
+
+        http.addFilterBefore(smsCodeFilter,UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)//自定义的额过滤器加到UsernamePasswordAuthenticationFilter前面去
                .formLogin()//表单登录---指定了身份认证方式
                       // .loginPage("/login.html")
                        .loginPage("/authentication/require")
@@ -90,7 +104,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                       .anyRequest()//任何请求
                       .authenticated()
                        .and()
-           .csrf()
-                     .disable();//都需要认证
+           .csrf().disable()//都需要认证
+                /**
+                 * 1.此配置相当于把SmsCodeAuthenticationSecurityConfig里面的configure配置加入到Web安全配置中
+                 * 2.等于在.csrf().disable()后面又写了SmsCodeAuthenticationSecurityConfig里面的configure配置
+                 */
+           .apply(smsCodeAuthenticationSecurityConfig);
     }
 }

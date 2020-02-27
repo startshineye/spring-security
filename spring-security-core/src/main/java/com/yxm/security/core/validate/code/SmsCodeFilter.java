@@ -27,7 +27,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * 验证码过滤器
+ * 短信验证码过滤器
  * @author yexinming
  * @date 2020/2/24
  **/

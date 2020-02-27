@@ -38,6 +38,7 @@ public class MyAuthenticationFailureHandler extends SimpleUrlAuthenticationFailu
          * 2.因为是登录失败,所以我们返回的时候状态码不再是200,而是500
          */
         logger.info("登录失败");
+        exception.printStackTrace();
 
         if(LoginType.JSON.equals(securityProperties.getBrowser().getLoginType())){//JSON
             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
