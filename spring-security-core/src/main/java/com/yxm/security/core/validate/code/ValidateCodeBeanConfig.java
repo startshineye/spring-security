@@ -24,8 +24,8 @@ public class ValidateCodeBeanConfig {
     * 就不会再用下面代码去创建
     **/
     @Bean
-    @ConditionalOnMissingBean(name="imageCodeGenerator")
-    public ValidateCodeGenerator imageCodeGenerator(){//方法的名字就是放到Spring容器里bean的名字
+    @ConditionalOnMissingBean(name="imageValidateCodeGenerator")
+    public ValidateCodeGenerator imageValidateCodeGenerator(){//方法的名字就是放到Spring容器里bean的名字
         ImageCodeGenerator imageCodeGenerator = new ImageCodeGenerator();
         imageCodeGenerator.setSecurityProperties(securityProperties);
         return imageCodeGenerator;

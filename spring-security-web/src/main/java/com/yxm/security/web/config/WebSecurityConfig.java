@@ -1,47 +1,40 @@
 package com.yxm.security.web.config;
+import com.yxm.security.core.authentication.AbstractChannelSecurityConfig;
 import com.yxm.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
+import com.yxm.security.core.properties.SecurityConstants;
 import com.yxm.security.core.properties.SecurityProperties;
-import com.yxm.security.core.validate.code.SmsCodeFilter;
-import com.yxm.security.core.validate.code.ValidateCodeFilter;
-import com.yxm.security.web.authentication.MyAuthenticationFailureHandler;
-import com.yxm.security.web.authentication.MyAuthenticationSuccessHandler;
+import com.yxm.security.core.validate.code.ValidateCodeSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
-
 import javax.sql.DataSource;
-
 /**
  * @author yexinming
  * @date 2020/2/22
  **/
 @Configuration
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private SecurityProperties securityProperties;
+public class WebSecurityConfig extends AbstractChannelSecurityConfig {
 
     @Autowired
-    private MyAuthenticationSuccessHandler myAuthenticationSuccessHandler;
+    private ValidateCodeSecurityConfig validateCodeSecurityConfig;//验证码过滤器配置
 
     @Autowired
-    private MyAuthenticationFailureHandler myAuthenticationFailureHandler;
+    private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig; //短信验证码授权配置
 
     @Autowired
     private UserDetailsService userDetailsService;
 
     @Autowired
-    private DataSource dataSource;
+    private SecurityProperties securityProperties;
 
     @Autowired
-    private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
+    private DataSource dataSource;
 
     @Bean
     public PasswordEncoder  passwordEncoder(){
@@ -66,23 +59,30 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        /**
-         * 定义了任何请求都需要表单认证
-         */
-        ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
-        validateCodeFilter.setAuthenticationFailureHandler(myAuthenticationFailureHandler);
-        validateCodeFilter.setSecurityProperties(securityProperties);//传递securityProperties
-        validateCodeFilter.afterPropertiesSet();
+        applyPasswordAuthenticationConfig(http);
 
-        /**
-         * 短信验证码过滤器
-         */
-        SmsCodeFilter smsCodeFilter = new SmsCodeFilter();
-        smsCodeFilter.setAuthenticationFailureHandler(myAuthenticationFailureHandler);
-        smsCodeFilter.setSecurityProperties(securityProperties);//传递securityProperties
-        smsCodeFilter.afterPropertiesSet();
+         http.apply(validateCodeSecurityConfig)
+                .and()
+             .apply(smsCodeAuthenticationSecurityConfig)
+                .and()
+             .rememberMe()
+                .tokenRepository(persistentTokenRepository())
+                .tokenValiditySeconds(securityProperties.getBrowser().getRememberMeSeconds())//配置token失效秒数
+                .userDetailsService(userDetailsService)
+                .and()
+             .authorizeRequests()
+                .antMatchers(
+                        SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
+                        SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE,
+                        securityProperties.getBrowser().getLoginPage(),
+                        SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*")
+                 .permitAll()
+                 .anyRequest()
+                 .authenticated()
+                 .and()
+                 .csrf().disable();
 
-        http.addFilterBefore(smsCodeFilter,UsernamePasswordAuthenticationFilter.class)
+       /* http.addFilterBefore(smsCodeFilter,UsernamePasswordAuthenticationFilter.class)
             .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)//自定义的额过滤器加到UsernamePasswordAuthenticationFilter前面去
                .formLogin()//表单登录---指定了身份认证方式
                       // .loginPage("/login.html")
@@ -105,10 +105,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                       .authenticated()
                        .and()
            .csrf().disable()//都需要认证
-                /**
+                *//**
                  * 1.此配置相当于把SmsCodeAuthenticationSecurityConfig里面的configure配置加入到Web安全配置中
                  * 2.等于在.csrf().disable()后面又写了SmsCodeAuthenticationSecurityConfig里面的configure配置
-                 */
-           .apply(smsCodeAuthenticationSecurityConfig);
+                 *//*
+           .apply(smsCodeAuthenticationSecurityConfig);*/
     }
 }
