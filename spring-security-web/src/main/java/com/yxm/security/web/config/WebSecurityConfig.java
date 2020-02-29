@@ -13,6 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.social.security.SpringSocialConfigurer;
+
 import javax.sql.DataSource;
 /**
  * @author yexinming
@@ -26,6 +28,9 @@ public class WebSecurityConfig extends AbstractChannelSecurityConfig {
 
     @Autowired
     private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig; //短信验证码授权配置
+
+    @Autowired
+    private SpringSocialConfigurer mySocialSecurityConfig;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -65,6 +70,8 @@ public class WebSecurityConfig extends AbstractChannelSecurityConfig {
                 .and()
              .apply(smsCodeAuthenticationSecurityConfig)
                 .and()
+             .apply(mySocialSecurityConfig)//配置第三方social
+                 .and()
              .rememberMe()
                 .tokenRepository(persistentTokenRepository())
                 .tokenValiditySeconds(securityProperties.getBrowser().getRememberMeSeconds())//配置token失效秒数

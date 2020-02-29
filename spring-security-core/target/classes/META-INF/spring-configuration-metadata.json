@@ -17,6 +17,11 @@
       "sourceType": "com.yxm.security.core.properties.SecurityProperties",
       "name": "yxm.security.code",
       "type": "com.yxm.security.core.properties.ValidateCodeProperties"
+    },
+    {
+      "sourceType": "com.yxm.security.core.properties.SecurityProperties",
+      "name": "yxm.security.social",
+      "type": "com.yxm.security.core.properties.SocialProperties"
     }
   ]
 }
