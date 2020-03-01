@@ -8,12 +8,18 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.ServletWebRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
@@ -25,6 +31,20 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
+    @Autowired
+    protected ProviderSignInUtils providerSignInUtils;
+
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
+    @PostMapping("/regist")
+    public void register(User user, HttpServletRequest request){
+        logger.info("/user/regist:user:[{}]",user);
+        String userId = user.getUsername();
+        providerSignInUtils.doPostSignUp(userId,new ServletWebRequest(request));
+
+    }
+
     @DeleteMapping("/{id:\\d+}")
     public void delete(@PathVariable String id) {
         System.out.println("update:" + id);

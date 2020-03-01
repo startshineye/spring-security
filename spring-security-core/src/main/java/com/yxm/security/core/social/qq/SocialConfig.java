@@ -1,16 +1,15 @@
 package com.yxm.security.core.social.qq;
-
 import com.yxm.security.core.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.encrypt.Encryptors;
-import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.social.config.annotation.EnableSocial;
 import org.springframework.social.config.annotation.SocialConfigurerAdapter;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository;
+import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.social.security.SpringSocialConfigurer;
 
 import javax.sql.DataSource;
@@ -43,6 +42,18 @@ public class SocialConfig extends SocialConfigurerAdapter {
     public SpringSocialConfigurer mySocialSecurityConfig(){
         String filterProcessesUrl = securityProperties.getSocial().getFilterProcessesUrl();
         MySpringSocialConfigurer mySpringSocialConfigurer = new MySpringSocialConfigurer(filterProcessesUrl);
+        mySpringSocialConfigurer.signupUrl(securityProperties.getBrowser().getSignUpUrl());
         return mySpringSocialConfigurer;
+    }
+
+    @Bean
+    public ProviderSignInUtils providerSignInUtils(ConnectionFactoryLocator connectionFactoryLocator){
+        /**
+         * new ProviderSignInUtils(ConnectionFactoryLocator connectionFactoryLocator, UsersConnectionRepository connectionRepository)
+         * 需要两个参数:
+         * 1.connectionFactoryLocator---用来定位connectionFactory的,SpringBoot已经给我们提供好了,我们直接@Autowired注入即可。或者写到上面参数上面,Spring会自动注入
+         * 2.UsersConnectionRepository---直接调用方法:getUsersConnectionRepository拿去即可。
+         */
+         return new ProviderSignInUtils(connectionFactoryLocator,getUsersConnectionRepository(connectionFactoryLocator));
     }
 }
