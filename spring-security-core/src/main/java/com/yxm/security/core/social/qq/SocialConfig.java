@@ -1,5 +1,6 @@
 package com.yxm.security.core.social.qq;
 
+import com.yxm.security.core.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +26,9 @@ public class SocialConfig extends SocialConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
+    @Autowired
+    private SecurityProperties securityProperties;
+
     @Override
     public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
         //connectionFactoryLocator会自动从父类的getUsersConnectionRepository传进来,
@@ -37,6 +41,8 @@ public class SocialConfig extends SocialConfigurerAdapter {
 
     @Bean
     public SpringSocialConfigurer mySocialSecurityConfig(){
-      return new SpringSocialConfigurer();
+        String filterProcessesUrl = securityProperties.getSocial().getFilterProcessesUrl();
+        MySpringSocialConfigurer mySpringSocialConfigurer = new MySpringSocialConfigurer(filterProcessesUrl);
+        return mySpringSocialConfigurer;
     }
 }

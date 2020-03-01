@@ -1,11 +1,8 @@
 package com.yxm.security.core.social.qq.connect;
-
+import com.yxm.security.core.social.qq.QQOAuth2Template;
 import com.yxm.security.core.social.qq.api.QQ;
 import com.yxm.security.core.social.qq.api.QQImpl;
 import org.springframework.social.oauth2.AbstractOAuth2ServiceProvider;
-import org.springframework.social.oauth2.OAuth2Operations;
-import org.springframework.social.oauth2.OAuth2Template;
-
 /**
  * @author yexinming
  * @date 2020/2/29
@@ -28,7 +25,8 @@ public class QQServiceProvider extends AbstractOAuth2ServiceProvider<QQ> {
          * authorizeUrl---应用将用户导向认证服务器时候,导向的url是什么。
          * accessTokenUr---第四部我们申请token时候携带的地址
          */
-        super(new OAuth2Template(appId,appSecret,URL_AUTHORIZA,URL_ACCESS_TOKEN));
+        super(new QQOAuth2Template(appId,appSecret,URL_AUTHORIZA,URL_ACCESS_TOKEN));
+        this.appId=appId;
     }
 
     @Override
