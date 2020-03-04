@@ -5,6 +5,7 @@ import com.yxm.security.app.authentication.MyAuthenticationSuccessHandler;
 import com.yxm.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import com.yxm.security.core.properties.SecurityConstants;
 import com.yxm.security.core.properties.SecurityProperties;
+import com.yxm.security.core.validate.code.ValidateCodeSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -30,6 +31,8 @@ public class MyResourceServerConfig extends ResourceServerConfigurerAdapter {
     private SpringSocialConfigurer mySocialSecurityConfig;
     @Autowired
     private SecurityProperties securityProperties;
+    @Autowired
+    private ValidateCodeSecurityConfig validateCodeSecurityConfig;//验证码过滤器配置
 
 
     @Override
@@ -40,7 +43,9 @@ public class MyResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .successHandler(myAuthenticationSuccessHandler)
                 .failureHandler(myAuthenticationFailureHandler);
 
-        http.apply(smsCodeAuthenticationSecurityConfig)
+        http.apply(validateCodeSecurityConfig)
+                .and()
+                .apply(smsCodeAuthenticationSecurityConfig)
                 .and()
                 .apply(mySocialSecurityConfig)//配置第三方social
                 .and()

@@ -1,10 +1,11 @@
 package com.yxm.security.core.validate;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 /**短信验证码
  * @author yexinming
  * @date 2020/2/24
  **/
-public class ValidateCode {
+public class ValidateCode  implements Serializable {
     private String code;
     /**
      * 过期时间
@@ -18,6 +19,11 @@ public class ValidateCode {
          */
         this.expireTime = LocalDateTime.now().plusSeconds(expireIn);
     }
+    public ValidateCode(String code, LocalDateTime expireTime){
+        this.code=code;
+        this.expireTime=expireTime;
+    }
+
     public boolean isExpried() {
         return LocalDateTime.now().isAfter(expireTime);
     }
