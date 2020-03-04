@@ -1,4 +1,4 @@
-package com.yxm.security.web.authentication;
+package com.yxm.security.app.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yxm.security.core.enums.LoginType;
@@ -11,10 +11,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
 /**
  * @author yexinming
  * @date 2020/2/23

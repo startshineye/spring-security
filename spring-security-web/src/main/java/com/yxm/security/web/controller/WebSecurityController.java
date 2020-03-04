@@ -1,7 +1,7 @@
 package com.yxm.security.web.controller;
 
 import com.yxm.security.core.properties.SecurityProperties;
-import com.yxm.security.web.beans.SimpleResponse;
+import com.yxm.security.core.support.SimpleResponse;
 import com.yxm.security.web.beans.SocialUserInfo;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;

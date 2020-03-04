@@ -13,9 +13,15 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <dependency>
+       <!-- <dependency>
             <artifactId>spring-security-web</artifactId>
             <groupId>com.yxm.security</groupId>
+            <version>${project.version}</version>
+        </dependency>-->
+
+        <dependency>
+            <groupId>com.yxm.security</groupId>
+            <artifactId>spring-security-app</artifactId>
             <version>${project.version}</version>
         </dependency>
 

@@ -42,11 +42,6 @@ public class WebSecurityConfig extends AbstractChannelSecurityConfig {
     private DataSource dataSource;
 
     @Bean
-    public PasswordEncoder  passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
     public PersistentTokenRepository persistentTokenRepository(){
         JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
         //

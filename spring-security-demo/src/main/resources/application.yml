@@ -31,3 +31,9 @@ yxm:
 #         length: 6
 #         width: 100
 #         url: /user,/user/*
+
+security:
+    oauth2:
+      client:
+        clientId: yxm
+        client_secret: yxmsecret

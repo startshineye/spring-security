@@ -1,5 +1,5 @@
 
-package com.yxm.security.web.beans;
+package com.yxm.security.core.support;
 public class SimpleResponse {
 	
 	public SimpleResponse(Object content){
