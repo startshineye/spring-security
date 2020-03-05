@@ -2,6 +2,7 @@ package com.yxm.security.app;
 
 import com.yxm.security.app.authentication.MyAuthenticationFailureHandler;
 import com.yxm.security.app.authentication.MyAuthenticationSuccessHandler;
+import com.yxm.security.app.authentication.openid.OpenIdAuthenticationSecurityConfig;
 import com.yxm.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import com.yxm.security.core.properties.SecurityConstants;
 import com.yxm.security.core.properties.SecurityProperties;
@@ -34,6 +35,9 @@ public class MyResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Autowired
     private ValidateCodeSecurityConfig validateCodeSecurityConfig;//验证码过滤器配置
 
+    @Autowired
+    private OpenIdAuthenticationSecurityConfig openIdAuthenticationSecurityConfig;
+
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
@@ -59,6 +63,8 @@ public class MyResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .permitAll()
                 .anyRequest()
                 .authenticated()
+                .and()
+                .apply(openIdAuthenticationSecurityConfig)
                 .and()
                 .csrf().disable();
     }

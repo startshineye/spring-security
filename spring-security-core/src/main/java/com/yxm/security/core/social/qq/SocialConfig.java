@@ -1,5 +1,7 @@
 package com.yxm.security.core.social.qq;
 import com.yxm.security.core.properties.SecurityProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +23,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableSocial//启用SpringSocial的功能
 public class SocialConfig extends SocialConfigurerAdapter {
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private DataSource dataSource;
@@ -35,7 +38,15 @@ public class SocialConfig extends SocialConfigurerAdapter {
         //TextEncryptor会把你插入到数据库里面的数据进行加解密:我们这里使用: Encryptors.noOpText()-不做加解密
         JdbcUsersConnectionRepository repository = new JdbcUsersConnectionRepository(dataSource, connectionFactoryLocator, Encryptors.noOpText());
         repository.setTablePrefix("yxm_");
+        logger.info("SocialConfig-->JdbcUsersConnectionRepository:"+repository);
         return repository;
+    }
+
+    @Bean
+    public UsersConnectionRepository usersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator){
+        UsersConnectionRepository usersConnectionRepository = getUsersConnectionRepository(connectionFactoryLocator);
+        logger.info("SocialConfig-->UsersConnectionRepository:@Bean "+usersConnectionRepository);
+        return usersConnectionRepository;
     }
 
     @Bean
