@@ -1,11 +1,15 @@
 package com.yxm.security.web.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.yxm.security.core.properties.SecurityProperties;
 import com.yxm.security.dto.User;
 import com.yxm.security.dto.UserQueryCondition;
 import com.yxm.security.exception.UserNotExistException;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.slf4j.Logger;
@@ -13,6 +17,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -35,7 +42,31 @@ public class UserController {
     @Autowired
     protected ProviderSignInUtils providerSignInUtils;
 
+    @Autowired
+    private SecurityProperties securityProperties;
+
+    //private Logger logger = LoggerFactory.getLogger(getClass());
+
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
+    @GetMapping("/me")
+    public Object me(Authentication user,HttpServletRequest request) throws Exception{
+        //1. 获取Authorization参数
+        String header = request.getHeader("Authorization");
+        String token = StringUtils.substringAfter(header, "bearer ");
+
+        //2.解密获取用户信息
+        Claims claims = Jwts.parser().setSigningKey(securityProperties.getOauth2().getJwtSigningKey().getBytes("UTF-8"))
+                .parseClaimsJws(token).getBody();
+        String company = (String)claims.get("company");
+
+        logger.info("--me--:company[{}]",company);
+
+        return user;
+    }
+    /*public Object me(@AuthenticationPrincipal UserDetails user){
+        return user;
+    }*/
 
     @PostMapping("/regist")
     public void register(User user, HttpServletRequest request){

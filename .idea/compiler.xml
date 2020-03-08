@@ -7,9 +7,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="spring-security-app" />
-        <module name="spring-security-demo" />
-        <module name="spring-security-core" />
         <module name="spring-security-web" />
+        <module name="spring-security-core" />
+        <module name="spring-security-demo" />
       </profile>
     </annotationProcessing>
   </component>

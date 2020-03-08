@@ -16,6 +16,13 @@ server:
 #此配置项存在的时候,系统走/demo-login.html,没有的话走标准;我们需要把配置项进行封装到类里面去
 yxm:
   security:
+     oauth2:
+       clients:
+         - clientId: yxm
+           clientSecret: yxmsecret
+           accessTokenValiditySeconds: 7200
+         - clientId: startshineye
+           clientSecret: startshineyesecret
      social:
        filterProcessesUrl: /qqLogin
        qq:
@@ -32,8 +39,8 @@ yxm:
 #         width: 100
 #         url: /user,/user/*
 
-security:
-    oauth2:
-      client:
-        clientId: yxm
-        client_secret: yxmsecret
+#security:
+#    oauth2:
+#      client:
+#        clientId: yxm
+#        client_secret: yxmsecret

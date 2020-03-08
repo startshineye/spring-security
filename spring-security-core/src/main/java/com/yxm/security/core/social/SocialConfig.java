@@ -1,4 +1,4 @@
-package com.yxm.security.core.social.qq;
+package com.yxm.security.core.social;
 import com.yxm.security.core.properties.SecurityProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +31,9 @@ public class SocialConfig extends SocialConfigurerAdapter {
     @Autowired
     private SecurityProperties securityProperties;
 
+    @Autowired(required = false)
+    private SocialAuthenticationFilterPostProcessor socialAuthenticationFilterPostProcessor;
+
     @Override
     public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
         //connectionFactoryLocator会自动从父类的getUsersConnectionRepository传进来,
@@ -52,9 +55,10 @@ public class SocialConfig extends SocialConfigurerAdapter {
     @Bean
     public SpringSocialConfigurer mySocialSecurityConfig(){
         String filterProcessesUrl = securityProperties.getSocial().getFilterProcessesUrl();
-        MySpringSocialConfigurer mySpringSocialConfigurer = new MySpringSocialConfigurer(filterProcessesUrl);
-        mySpringSocialConfigurer.signupUrl(securityProperties.getBrowser().getSignUpUrl());
-        return mySpringSocialConfigurer;
+        MySpringSocialConfigurer configurer = new MySpringSocialConfigurer(filterProcessesUrl);
+        configurer.signupUrl(securityProperties.getBrowser().getSignUpUrl());
+        configurer.setSocialAuthenticationFilterPostProcessor(socialAuthenticationFilterPostProcessor);
+        return configurer;
     }
 
     @Bean

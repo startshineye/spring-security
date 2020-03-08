@@ -20,6 +20,11 @@
     },
     {
       "sourceType": "com.yxm.security.core.properties.SecurityProperties",
+      "name": "yxm.security.oauth2",
+      "type": "com.yxm.security.core.properties.OAuth2Properties"
+    },
+    {
+      "sourceType": "com.yxm.security.core.properties.SecurityProperties",
       "name": "yxm.security.social",
       "type": "com.yxm.security.core.properties.SocialProperties"
     }

@@ -54,6 +54,12 @@
             <artifactId>wiremock</artifactId>
         </dependency>
 
+        <!--添加JWT依赖-->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.7.0</version>
+        </dependency>
     </dependencies>
 
     <!--<build>
