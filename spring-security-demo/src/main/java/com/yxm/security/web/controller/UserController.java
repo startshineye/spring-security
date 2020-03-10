@@ -73,7 +73,6 @@ public class UserController {
         logger.info("/user/regist:user:[{}]",user);
         String userId = user.getUsername();
         providerSignInUtils.doPostSignUp(userId,new ServletWebRequest(request));
-
     }
 
     @DeleteMapping("/{id:\\d+}")

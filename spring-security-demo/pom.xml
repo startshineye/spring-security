@@ -13,17 +13,18 @@
     <packaging>jar</packaging>
 
     <dependencies>
-       <!-- <dependency>
+        <!--引入web依赖-->
+        <dependency>
             <artifactId>spring-security-web</artifactId>
             <groupId>com.yxm.security</groupId>
             <version>${project.version}</version>
-        </dependency>-->
+        </dependency>
 
-        <dependency>
+       <!-- <dependency>
             <groupId>com.yxm.security</groupId>
             <artifactId>spring-security-app</artifactId>
             <version>${project.version}</version>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
